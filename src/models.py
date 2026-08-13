@@ -80,3 +80,20 @@ class TextSegment:
 
     # Normalized text for PII detection
     normalized_text: Optional[str] = None
+
+@dataclass(frozen=True)
+class ContextEvidence:
+    """Represents contextual evidence gathered around a candidate PIIEntity.
+
+    Attributes:
+        has_positive: Boolean indicating if supporting context was found.
+        has_negative: Boolean indicating if contradicting/negative context was found.
+        matched_keyword: The actual keyword string that matched, or None.
+        matched_rule: Name/ID of the rule that matched, or None.
+        distance: Optional character distance of the match from candidate boundaries, or None.
+    """
+    has_positive: bool
+    has_negative: bool
+    matched_keyword: Optional[str] = None
+    matched_rule: Optional[str] = None
+    distance: Optional[int] = None
