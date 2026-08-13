@@ -97,3 +97,18 @@ class ContextEvidence:
     matched_keyword: Optional[str] = None
     matched_rule: Optional[str] = None
     distance: Optional[int] = None
+
+@dataclass(frozen=True)
+class ResolutionResult:
+    """Represents the outcome of resolving a candidate PIIEntity.
+
+    Attributes:
+        entity: The original PIIEntity.
+        is_accepted: Boolean indicating if the candidate met the threshold.
+        score: The calculated resolution score, clamped between 0.0 and 1.0.
+        reason: Explanation of the resolution decision.
+    """
+    entity: PIIEntity
+    is_accepted: bool
+    score: float
+    reason: str
