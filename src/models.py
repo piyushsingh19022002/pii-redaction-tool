@@ -18,3 +18,6 @@ class TextSegment:
     table_index: Optional[int] = None
     row_index: Optional[int] = None
     cell_index: Optional[int] = None
+
+    # Normalized text for PII detection
+    normalized_text: Optional[str] = None

@@ -1,6 +1,7 @@
 import docx
 from typing import List
 from src.models import TextSegment
+from src.normalizer import normalize_text
 
 def extract_segments(file_path: str) -> List[TextSegment]:
     """Reads a DOCX document and extracts its non-empty paragraphs and table cells.
@@ -24,7 +25,8 @@ def extract_segments(file_path: str) -> List[TextSegment]:
             segments.append(TextSegment(
                 text=text,
                 segment_type="paragraph",
-                paragraph_index=idx
+                paragraph_index=idx,
+                normalized_text=normalize_text(text)
             ))
 
     # Extract tables
@@ -38,7 +40,8 @@ def extract_segments(file_path: str) -> List[TextSegment]:
                         segment_type="table-cell",
                         table_index=table_idx,
                         row_index=row_idx,
-                        cell_index=cell_idx
+                        cell_index=cell_idx,
+                        normalized_text=normalize_text(text)
                     ))
 
     return segments
@@ -69,18 +72,24 @@ if __name__ == "__main__":
             print(f"  - Total Unique Tables:  {table_count}")
             print("==================================================\n")
             
-            # Print paragraph sample
-            print("SAMPLE PARAGRAPH SEGMENTS:")
+            # Print paragraph sample with raw vs normalized text
+            print("SAMPLE PARAGRAPH SEGMENTS (RAW vs NORMALIZED):")
             print("--------------------------------------------------")
-            for s in paragraphs[:3]:
-                print(f"[Para Index {s.paragraph_index}] {repr(s.text[:100])}...")
+            for s in paragraphs[:2]:
+                print(f"[Para Index {s.paragraph_index}]")
+                print(f"  RAW:        {repr(s.text[:100])}")
+                print(f"  NORMALIZED: {repr(s.normalized_text[:100])}")
+                print()
             print("--------------------------------------------------\n")
             
-            # Print table cell sample
-            print("SAMPLE TABLE-CELL SEGMENTS:")
+            # Print table cell sample with raw vs normalized text
+            print("SAMPLE TABLE-CELL SEGMENTS (RAW vs NORMALIZED):")
             print("--------------------------------------------------")
-            for s in cells[:3]:
-                print(f"[Table {s.table_index}, Row {s.row_index}, Cell {s.cell_index}] {repr(s.text[:100])}...")
+            for s in cells[:2]:
+                print(f"[Table {s.table_index}, Row {s.row_index}, Cell {s.cell_index}]")
+                print(f"  RAW:        {repr(s.text[:100])}")
+                print(f"  NORMALIZED: {repr(s.normalized_text[:100])}")
+                print()
             print("--------------------------------------------------")
             
         except Exception as e:
