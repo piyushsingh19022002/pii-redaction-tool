@@ -1,0 +1,159 @@
+{
+  "examples": [
+    {
+      "id": "ex1",
+      "text": "John Doe can be reached at john.doe@example.com.",
+      "entities": [
+        {
+          "text": "John Doe",
+          "type": "PERSON",
+          "start": 0,
+          "end": 8
+        },
+        {
+          "text": "john.doe@example.com",
+          "type": "EMAIL",
+          "start": 27,
+          "end": 47
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex2",
+      "text": "Call +91 98765-43210 for details.",
+      "entities": [
+        {
+          "text": "+91 98765-43210",
+          "type": "PHONE",
+          "start": 5,
+          "end": 20
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex3",
+      "text": "Google LLC is located at 1600 Amphitheatre Parkway, Mountain View, CA.",
+      "entities": [
+        {
+          "text": "Google LLC",
+          "type": "ORGANIZATION",
+          "start": 0,
+          "end": 10
+        },
+        {
+          "text": "1600 Amphitheatre Parkway, Mountain View, CA",
+          "type": "ADDRESS",
+          "start": 25,
+          "end": 69
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex4",
+      "text": "My SSN is 999-00-1234.",
+      "entities": [
+        {
+          "text": "999-00-1234",
+          "type": "SSN",
+          "start": 10,
+          "end": 21
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex5",
+      "text": "Card number is 4111 1111 1111 1111.",
+      "entities": [
+        {
+          "text": "4111 1111 1111 1111",
+          "type": "CREDIT_CARD",
+          "start": 15,
+          "end": 34
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex6",
+      "text": "He was born on 01/02/1995.",
+      "entities": [
+        {
+          "text": "01/02/1995",
+          "type": "DOB",
+          "start": 15,
+          "end": 25
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex7",
+      "text": "Server IP is 192.0.2.1.",
+      "entities": [
+        {
+          "text": "192.0.2.1",
+          "type": "IP_ADDRESS",
+          "start": 13,
+          "end": 22
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex8",
+      "text": "Order number 1234-5678-9012 is not a credit card.",
+      "entities": [],
+      "non_pii": [
+        {
+          "text": "1234-5678-9012",
+          "type": "CREDIT_CARD",
+          "start": 13,
+          "end": 27
+        }
+      ]
+    },
+    {
+      "id": "ex9",
+      "text": "Ticket ID 999-00-1111 is not a Social Security Number.",
+      "entities": [],
+      "non_pii": [
+        {
+          "text": "999-00-1111",
+          "type": "SSN",
+          "start": 10,
+          "end": 21
+        }
+      ]
+    },
+    {
+      "id": "ex10",
+      "text": "Incorporation date 01/02/1995 is not a date of birth.",
+      "entities": [],
+      "non_pii": [
+        {
+          "text": "01/02/1995",
+          "type": "DOB",
+          "start": 19,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "id": "ex11",
+      "text": "The transaction identifier is 10/11/2020.",
+      "entities": [],
+      "non_pii": [
+        {
+          "text": "10/11/2020",
+          "type": "DOB",
+          "start": 30,
+          "end": 40
+        }
+      ]
+    }
+  ]
+}
