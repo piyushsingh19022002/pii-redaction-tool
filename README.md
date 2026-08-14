@@ -252,12 +252,20 @@ The pipeline splits XML text runs inside `.docx` paragraphs and tables to locate
 
 ## 10. Usage
 
+### Option A: CLI Interface
 Run the redaction pipeline via the CLI entrypoint:
 ```bash
 python -m src.main \
   --input "input/Red Herring Prospectus.docx" \
   --output "output/final_redacted.docx"
 ```
+
+### Option B: Web Application Interface
+Start the local Flask application server:
+```bash
+python app.py
+```
+Then navigate to `http://127.0.0.1:5001` in your browser. The page serves a premium drag-and-drop file upload UI to easily redact DOCX files and download the sanitized outputs with dynamic statistics.
 
 ---
 
@@ -369,9 +377,27 @@ In PII redaction, missing a sensitive entity (False Negative) is a severe privac
 
 ---
 
-## 20. Assignment Deliverables
+---
+
+## 20. Deployment
+
+The application can be deployed as a Python FastAPI web service on Render.
+
+* **Build Command**:
+  ```bash
+  pip install -r requirements.txt && python -m spacy download en_core_web_sm
+  ```
+* **Start Command**:
+  ```bash
+  uvicorn app:app --host 0.0.0.0 --port $PORT
+  ```
+
+---
+
+## 21. Assignment Deliverables
 
 1. **Source Code**: Fully modular codebase under `src/` and `tests/`.
 2. **Redacted DOCX**: `output/final_redacted.docx` (and `output/final_redacted_v24.docx`).
 3. **README**: This documentation file.
 4. **Evaluation Report**: Located at `evaluation/final_evaluation_report.md`.
+
