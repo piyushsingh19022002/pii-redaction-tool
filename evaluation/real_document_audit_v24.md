@@ -20,7 +20,7 @@ The table below contrasts the pipeline execution statistics before and after the
 | **PHONE Redacted** | 48 | 48 | 0 |
 | **ADDRESS Redacted** | 3 | 3 | 0 |
 
-The accepted ORGANIZATION count dropped by **1433**, reducing over-redacted noise by **53.0%** while preserving all other PII categories exactly.
+The accepted ORGANIZATION count dropped by **1433**, resulting in a **53% reduction in accepted ORGANIZATION candidates** while preserving all other PII categories exactly.
 
 ---
 
@@ -59,7 +59,7 @@ We performed a qualitative audit of 20 representative ORGANIZATION detections in
 
 ### Audit Proportional Assessment
 * **Before (v23)**: Approximately **85%** of checked organization detections were obvious false positives (common nouns, state names, headings).
-* **After (v24)**: Over **65%** of audited organization matches represent legitimate corporate organizations or trusts. The proportion of obvious false positives has been drastically reduced.
+* **After (v24)**: In the qualitative sample, the majority of reviewed organization detections were legitimate organizations or trusts.
 
 ---
 

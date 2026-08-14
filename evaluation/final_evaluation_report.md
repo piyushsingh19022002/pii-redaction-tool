@@ -70,8 +70,8 @@ We executed the pipeline on the actual financial document. The validation checks
 * **Output File**: `output/final_redacted.docx`
 * **Segments Processed**: `4288`
 * **Candidates Detected**: `3711`
-* **Candidates Accepted**: `3577`
-* **Output File Size**: `1881500 bytes`
+* **Candidates Accepted**: `2144`
+* **Output File Size**: `1881861 bytes`
 * **Redacted Doc Paragraphs**: `1006`
 * **Redacted Doc Tables**: `76`
 * **Validation Status**: `SUCCESS (PASS)`
@@ -83,7 +83,7 @@ We executed the pipeline on the actual financial document. The validation checks
 | PERSON | 752 |
 | EMAIL | 70 |
 | PHONE | 48 |
-| ORGANIZATION | 2704 |
+| ORGANIZATION | 1271 |
 | ADDRESS | 3 |
 | SSN | 0 |
 | CREDIT_CARD | 0 |
