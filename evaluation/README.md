@@ -36,14 +36,51 @@ The manual annotations are stored in [evaluation/ground_truth.json](file:///User
 ```
 
 ### JSON Fields
-* **`id`**: A unique string identifier for the example.
+* **`id`**: A unique string identifier for the example (e.g. `ex1` to `ex62`).
 * **`text`**: The input segment string.
 * **`entities`**: A list of positive PII annotations.
 * **`non_pii`**: A list of explicitly annotated negative spans (e.g. order numbers resembling credit cards, transaction IDs resembling dates, etc.).
 
 ---
 
-## 2. Evaluation Metrics Definition
+## 2. Dataset Statistics
+
+* **Total Examples**: 62
+* **Total Positive Entities**: 60
+* **Total Negative Annotations**: 6
+
+### Positive Entity Counts per PII Type
+* **PERSON**: 11 positive entities
+* **EMAIL**: 7 positive entities
+* **PHONE**: 6 positive entities
+* **ORGANIZATION**: 6 positive entities
+* **ADDRESS**: 6 positive entities
+* **SSN**: 6 positive entities
+* **CREDIT_CARD**: 6 positive entities
+* **DOB**: 6 positive entities
+* **IP_ADDRESS**: 6 positive entities
+
+---
+
+## 3. Variation Strategy
+
+To build a robust evaluation benchmark, the dataset incorporates wide structural variations for each PII type:
+* **Capitalization**: Mixed casing in names, domains, and addresses.
+* **Punctuation**: Diverse punctuation styles (e.g., phone numbers and credit cards with/without dashes, spaces, and brackets).
+* **Spacing**: Multiple spaces, clean tabs, and compact inline placements.
+* **Formatting**: Standard and non-standard layouts (e.g. raw numeric IPs, dashed SSNs, textual dates like `31 Dec 1985` vs numeric dates like `05.05.1975`).
+* **Surrounding Context**: Placing positive entities adjacent to realistic positive context clues, and negative entities adjacent to confusing negative prefixes (like `Transaction reference number`, `Ticket ID`, etc.).
+
+---
+
+## 4. Synthetic Data Policy
+
+* **Completely Synthetic**: All examples, names, telephone numbers, emails, addresses, credit cards, and SSNs in this evaluation suite are synthetically generated mock values.
+* **Privacy Compliance**: Under no circumstances should real personal data, commercial keys, or private names from actual draft prospectuses be copied into the evaluation suite.
+
+---
+
+## 5. Evaluation Metrics Definition
 
 * **True Positive (TP)**: A prediction matches a ground truth entity exactly in both type and character span:
   $$\text{predicted\_type} == \text{gt\_type} \quad \text{AND} \quad \text{predicted\_span} == \text{gt\_span}$$
@@ -56,7 +93,7 @@ The manual annotations are stored in [evaluation/ground_truth.json](file:///User
 
 ---
 
-## 3. Formulas
+## 6. Formulas
 
 * **Precision**: Measures the ratio of correctly predicted PII to all predicted PII:
   $$\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}$$
@@ -69,7 +106,7 @@ The manual annotations are stored in [evaluation/ground_truth.json](file:///User
 
 ---
 
-## 4. Limitations of the Evaluation
+## 7. Limitations of the Evaluation
 
 1. **Manual Annotations**: Ground truth values are manually created, which is subject to human error or interpretation differences.
 2. **Synthetic Data**: Synthetic examples help run tests predictably, but may not fully represent all formatting complexities of actual PDF/DOCX documents.

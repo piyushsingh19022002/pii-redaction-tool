@@ -215,3 +215,79 @@ def test_f1_score_calculation():
     assert email_rep["precision"] == 0.5
     assert email_rep["recall"] == 0.5
     assert email_rep["f1"] == 0.5
+
+def test_ground_truth_dataset_integrity():
+    """Validates the structure and integrity of the ground_truth.json dataset."""
+    import json
+    import os
+
+    gt_path = "evaluation/ground_truth.json"
+    assert os.path.exists(gt_path)
+
+    # 1. Loads successfully
+    with open(gt_path, "r") as f:
+        data = json.load(f)
+    
+    assert "examples" in data
+    examples = data["examples"]
+    assert len(examples) > 0
+
+    # 2. Every required PII type appears
+    # 3. Every required PII type has multiple examples
+    required_types = {
+        "PERSON", "EMAIL", "PHONE", "ORGANIZATION", 
+        "ADDRESS", "SSN", "CREDIT_CARD", "DOB", "IP_ADDRESS"
+    }
+
+    type_counts = {t: 0 for t in required_types}
+    total_non_pii = 0
+
+    for ex in examples:
+        assert "id" in ex
+        assert "text" in ex
+        assert "entities" in ex
+        assert "non_pii" in ex
+
+        text = ex["text"]
+        entities = ex["entities"]
+        non_pii = ex["non_pii"]
+        total_non_pii += len(non_pii)
+
+        # 5. Entity offsets are valid
+        # 6. Entity text matches its annotated span
+        # 7. No duplicate ground-truth entities exist
+        seen_spans = set()
+        
+        for ent in entities + non_pii:
+            assert "text" in ent
+            assert "type" in ent
+            assert "start" in ent
+            assert "end" in ent
+
+            ent_text = ent["text"]
+            ent_type = ent["type"]
+            start = ent["start"]
+            end = ent["end"]
+
+            # Verify offsets boundaries
+            assert 0 <= start <= len(text)
+            assert start <= end <= len(text)
+
+            # Verify content matches span
+            assert text[start:end] == ent_text
+
+            # Update count for required types
+            if ent_type in type_counts:
+                type_counts[ent_type] += 1
+
+            # Verify no duplicate spans within the same example
+            span_key = (start, end, ent_type)
+            assert span_key not in seen_spans
+            seen_spans.add(span_key)
+
+    # Assert every type has multiple positive or negative instances in the dataset
+    for t, count in type_counts.items():
+        assert count >= 2, f"Type {t} has less than 2 examples (count={count})"
+
+    # Verify negative annotations exist overall
+    assert total_non_pii > 0

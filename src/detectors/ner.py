@@ -86,19 +86,4 @@ class NERDetector(BaseDetector):
                 source="regex_org"
             ))
 
-        # 3. Address regex candidate scan
-        # Matches street numbers followed by name words and standard road suffixes.
-        addr_pattern = re.compile(
-            r"\b\d+\s+[A-Z][a-zA-Z0-9\s\.\,]+(?:Street|St\.|Avenue|Ave\.|Road|Rd\.|Boulevard|Blvd\.|Parkway|Pkwy|Way|Drive|Dr\.)(?:,\s+[A-Z][a-zA-Z\s]+)?(?:,\s+[A-Z]{2})?\b"
-        )
-        for match in addr_pattern.finditer(text):
-            entities.append(PIIEntity(
-                text=match.group(0),
-                entity_type=PIIType.ADDRESS,
-                start=match.start(),
-                end=match.end(),
-                confidence=0.85,
-                source="regex_addr"
-            ))
-
         return entities

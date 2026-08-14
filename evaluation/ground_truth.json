@@ -154,6 +154,677 @@
           "end": 40
         }
       ]
+    },
+    {
+      "id": "ex12",
+      "text": "Please send the contract to Alice Smith or Bob Johnson.",
+      "entities": [
+        {
+          "text": "Alice Smith",
+          "type": "PERSON",
+          "start": 28,
+          "end": 39
+        },
+        {
+          "text": "Bob Johnson",
+          "type": "PERSON",
+          "start": 43,
+          "end": 54
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex13",
+      "text": "The report was signed by David K. Miller in the presence of Evelyn.",
+      "entities": [
+        {
+          "text": "David K. Miller",
+          "type": "PERSON",
+          "start": 25,
+          "end": 40
+        },
+        {
+          "text": "Evelyn",
+          "type": "PERSON",
+          "start": 60,
+          "end": 66
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex14",
+      "text": "Let's discuss the project timeline with Frankie Valli and Grace Hopper.",
+      "entities": [
+        {
+          "text": "Frankie Valli",
+          "type": "PERSON",
+          "start": 40,
+          "end": 53
+        },
+        {
+          "text": "Grace Hopper",
+          "type": "PERSON",
+          "start": 58,
+          "end": 70
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex15",
+      "text": "Dear Henry Ford, thank you for visiting our facility.",
+      "entities": [
+        {
+          "text": "Henry Ford",
+          "type": "PERSON",
+          "start": 5,
+          "end": 15
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex16",
+      "text": "The team leads are Iris West and Jack Ryan.",
+      "entities": [
+        {
+          "text": "Iris West",
+          "type": "PERSON",
+          "start": 19,
+          "end": 28
+        },
+        {
+          "text": "Jack Ryan",
+          "type": "PERSON",
+          "start": 33,
+          "end": 42
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex17",
+      "text": "Contact us at support@company.org or billing-dept@services.co.uk.",
+      "entities": [
+        {
+          "text": "support@company.org",
+          "type": "EMAIL",
+          "start": 14,
+          "end": 33
+        },
+        {
+          "text": "billing-dept@services.co.uk",
+          "type": "EMAIL",
+          "start": 37,
+          "end": 64
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex18",
+      "text": "Her personal email address is jane_doe123@gmail.com.",
+      "entities": [
+        {
+          "text": "jane_doe123@gmail.com",
+          "type": "EMAIL",
+          "start": 30,
+          "end": 51
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex19",
+      "text": "The test alias is test.user+alias@subdomain.domain.com.",
+      "entities": [
+        {
+          "text": "test.user+alias@subdomain.domain.com",
+          "type": "EMAIL",
+          "start": 18,
+          "end": 54
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex20",
+      "text": "All sales inquiries should go to sales@corporation.net.",
+      "entities": [
+        {
+          "text": "sales@corporation.net",
+          "type": "EMAIL",
+          "start": 33,
+          "end": 54
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex21",
+      "text": "Please email Charlie Brown at charlie.b@peanuts.org.",
+      "entities": [
+        {
+          "text": "Charlie Brown",
+          "type": "PERSON",
+          "start": 13,
+          "end": 26
+        },
+        {
+          "text": "charlie.b@peanuts.org",
+          "type": "EMAIL",
+          "start": 30,
+          "end": 51
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex22",
+      "text": "My mobile phone number is 9876543210.",
+      "entities": [
+        {
+          "text": "9876543210",
+          "type": "PHONE",
+          "start": 26,
+          "end": 36
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex23",
+      "text": "You can reach us at 022-2653-3333 during office hours.",
+      "entities": [
+        {
+          "text": "022-2653-3333",
+          "type": "PHONE",
+          "start": 20,
+          "end": 33
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex24",
+      "text": "Call +91-9123456789 if you need urgent customer support.",
+      "entities": [
+        {
+          "text": "+91-9123456789",
+          "type": "PHONE",
+          "start": 5,
+          "end": 19
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex25",
+      "text": "His direct line number is +91-22-4505-3237.",
+      "entities": [
+        {
+          "text": "+91-22-4505-3237",
+          "type": "PHONE",
+          "start": 26,
+          "end": 42
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex26",
+      "text": "The primary emergency contact helpline is 9999999999.",
+      "entities": [
+        {
+          "text": "9999999999",
+          "type": "PHONE",
+          "start": 42,
+          "end": 52
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex27",
+      "text": "The contract was awarded to Acme Corporation.",
+      "entities": [
+        {
+          "text": "Acme Corporation",
+          "type": "ORGANIZATION",
+          "start": 28,
+          "end": 44
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex28",
+      "text": "He currently works as a researcher at Scaler AI Labs.",
+      "entities": [
+        {
+          "text": "Scaler AI Labs",
+          "type": "ORGANIZATION",
+          "start": 38,
+          "end": 52
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex29",
+      "text": "We partnered with Example Technologies Ltd. for this project.",
+      "entities": [
+        {
+          "text": "Example Technologies Ltd.",
+          "type": "ORGANIZATION",
+          "start": 18,
+          "end": 43
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex30",
+      "text": "Microsoft Corp is releasing a major software update next week.",
+      "entities": [
+        {
+          "text": "Microsoft Corp",
+          "type": "ORGANIZATION",
+          "start": 0,
+          "end": 14
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex31",
+      "text": "The security audit was conducted by TechSolutions Inc..",
+      "entities": [
+        {
+          "text": "TechSolutions Inc.",
+          "type": "ORGANIZATION",
+          "start": 36,
+          "end": 54
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex32",
+      "text": "The corporate office is located at 123 Main Street, New York, NY.",
+      "entities": [
+        {
+          "text": "123 Main Street, New York, NY",
+          "type": "ADDRESS",
+          "start": 35,
+          "end": 64
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex33",
+      "text": "Send the physical documents to 456 Oak Avenue, Apt 2B, Chicago, IL.",
+      "entities": [
+        {
+          "text": "456 Oak Avenue, Apt 2B, Chicago, IL",
+          "type": "ADDRESS",
+          "start": 31,
+          "end": 66
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex34",
+      "text": "Our head office address is 789 Pine Road, San Francisco, CA.",
+      "entities": [
+        {
+          "text": "789 Pine Road, San Francisco, CA",
+          "type": "ADDRESS",
+          "start": 27,
+          "end": 59
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex35",
+      "text": "The company's registered address is 101 Boulevard Saint-Germain, Paris.",
+      "entities": [
+        {
+          "text": "101 Boulevard Saint-Germain, Paris",
+          "type": "ADDRESS",
+          "start": 36,
+          "end": 70
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex36",
+      "text": "Visit our flagship store at 505 Broadway Ave, Seattle, WA 98101.",
+      "entities": [
+        {
+          "text": "505 Broadway Ave, Seattle, WA 98101",
+          "type": "ADDRESS",
+          "start": 28,
+          "end": 63
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex37",
+      "text": "Your US Social Security Number is 123-45-6789.",
+      "entities": [
+        {
+          "text": "123-45-6789",
+          "type": "SSN",
+          "start": 34,
+          "end": 45
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex38",
+      "text": "Please confirm the following SSN: 899-12-3456.",
+      "entities": [
+        {
+          "text": "899-12-3456",
+          "type": "SSN",
+          "start": 34,
+          "end": 45
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex39",
+      "text": "The customer identifier 555-66-7777 is classified as an SSN.",
+      "entities": [
+        {
+          "text": "555-66-7777",
+          "type": "SSN",
+          "start": 24,
+          "end": 35
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex40",
+      "text": "The verified SSN of the policyholder is 444-88-9999.",
+      "entities": [
+        {
+          "text": "444-88-9999",
+          "type": "SSN",
+          "start": 40,
+          "end": 51
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex41",
+      "text": "To proceed, please enter your SSN: 333-22-1111.",
+      "entities": [
+        {
+          "text": "333-22-1111",
+          "type": "SSN",
+          "start": 35,
+          "end": 46
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex42",
+      "text": "Visa credit card is 4111-1111-1111-1111.",
+      "entities": [
+        {
+          "text": "4111-1111-1111-1111",
+          "type": "CREDIT_CARD",
+          "start": 20,
+          "end": 39
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex43",
+      "text": "Charge the registration fee to card number 4111111111111111.",
+      "entities": [
+        {
+          "text": "4111111111111111",
+          "type": "CREDIT_CARD",
+          "start": 43,
+          "end": 59
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex44",
+      "text": "Verify the credit card digits 4012 8888 8888 1881.",
+      "entities": [
+        {
+          "text": "4012 8888 8888 1881",
+          "type": "CREDIT_CARD",
+          "start": 30,
+          "end": 49
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex45",
+      "text": "Refund was sent back to card 4222222222222.",
+      "entities": [
+        {
+          "text": "4222222222222",
+          "type": "CREDIT_CARD",
+          "start": 29,
+          "end": 42
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex46",
+      "text": "Credit card matching the record is 4111-1111-1111-1111.",
+      "entities": [
+        {
+          "text": "4111-1111-1111-1111",
+          "type": "CREDIT_CARD",
+          "start": 35,
+          "end": 54
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex47",
+      "text": "His confirmed date of birth is 15-08-1980.",
+      "entities": [
+        {
+          "text": "15-08-1980",
+          "type": "DOB",
+          "start": 31,
+          "end": 41
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex48",
+      "text": "Customer DOB: 1990-12-25.",
+      "entities": [
+        {
+          "text": "1990-12-25",
+          "type": "DOB",
+          "start": 14,
+          "end": 24
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex49",
+      "text": "She was born on Jan 01, 2000 in London.",
+      "entities": [
+        {
+          "text": "Jan 01, 2000",
+          "type": "DOB",
+          "start": 16,
+          "end": 28
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex50",
+      "text": "The policyholder's birthdate is 31 Dec 1985.",
+      "entities": [
+        {
+          "text": "31 Dec 1985",
+          "type": "DOB",
+          "start": 32,
+          "end": 43
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex51",
+      "text": "The applicant was born on 05.05.1975.",
+      "entities": [
+        {
+          "text": "05.05.1975",
+          "type": "DOB",
+          "start": 26,
+          "end": 36
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex52",
+      "text": "The remote server IP address is 10.0.0.1.",
+      "entities": [
+        {
+          "text": "10.0.0.1",
+          "type": "IP_ADDRESS",
+          "start": 32,
+          "end": 40
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex53",
+      "text": "Router IP gateway is configured at 192.168.1.254.",
+      "entities": [
+        {
+          "text": "192.168.1.254",
+          "type": "IP_ADDRESS",
+          "start": 35,
+          "end": 48
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex54",
+      "text": "The DNS server address is 8.8.8.8.",
+      "entities": [
+        {
+          "text": "8.8.8.8",
+          "type": "IP_ADDRESS",
+          "start": 26,
+          "end": 33
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex55",
+      "text": "External firewall gateway is located at 172.16.254.1.",
+      "entities": [
+        {
+          "text": "172.16.254.1",
+          "type": "IP_ADDRESS",
+          "start": 40,
+          "end": 52
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex56",
+      "text": "The local loopback address is 127.0.0.1.",
+      "entities": [
+        {
+          "text": "127.0.0.1",
+          "type": "IP_ADDRESS",
+          "start": 30,
+          "end": 39
+        }
+      ],
+      "non_pii": []
+    },
+    {
+      "id": "ex57",
+      "text": "Transaction reference number 123-45-6789 is not an SSN.",
+      "entities": [],
+      "non_pii": [
+        {
+          "text": "123-45-6789",
+          "type": "SSN",
+          "start": 29,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "id": "ex58",
+      "text": "Ticket ID 98765-43210 is not a valid mobile phone number.",
+      "entities": [],
+      "non_pii": [
+        {
+          "text": "98765-43210",
+          "type": "PHONE",
+          "start": 10,
+          "end": 21
+        }
+      ]
+    },
+    {
+      "id": "ex59",
+      "text": "My target score value is 1234567890 (not a phone number).",
+      "entities": [],
+      "non_pii": []
+    },
+    {
+      "id": "ex60",
+      "text": "Send a message to user@domain without any dot-com extension.",
+      "entities": [],
+      "non_pii": []
+    },
+    {
+      "id": "ex61",
+      "text": "We will establish a new organization and corporation next year.",
+      "entities": [],
+      "non_pii": []
+    },
+    {
+      "id": "ex62",
+      "text": "Please check the following terms: SSN, IP, LLC, Server IP, or 01/02/1995.",
+      "entities": [],
+      "non_pii": []
     }
   ]
 }

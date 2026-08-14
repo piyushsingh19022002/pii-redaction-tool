@@ -48,6 +48,7 @@ class PIIRedactionPipeline:
             from src.detectors.credit_card import CreditCardDetector
             from src.detectors.dob import DOBDetector
             from src.detectors.ner import NERDetector
+            from src.detectors.address import AddressDetector
 
             self.detectors = [
                 EmailDetector(),
@@ -56,7 +57,8 @@ class PIIRedactionPipeline:
                 SSNDetector(),
                 CreditCardDetector(),
                 DOBDetector(),
-                NERDetector()
+                NERDetector(),
+                AddressDetector()
             ]
         else:
             self.detectors = detectors

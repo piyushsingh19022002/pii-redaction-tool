@@ -95,13 +95,7 @@ def test_ner_address_and_org_regression(detector):
     orgs = [ent for ent in r_org if ent.entity_type == PIIType.ORGANIZATION]
     assert any(o.text == "Google LLC" for o in orgs)
 
-    # 2. Address pattern match
-    r_addr = detector.detect("Address is 1600 Amphitheatre Parkway, Mountain View, CA.")
-    addrs = [ent for ent in r_addr if ent.entity_type == PIIType.ADDRESS]
-    assert len(addrs) == 1
-    assert addrs[0].text == "1600 Amphitheatre Parkway, Mountain View, CA"
-
-    # 3. False Positive Filtering
+    # 2. False Positive Filtering
     r_fp = detector.detect("SSN, IP, LLC, Server IP, or 01/02/1995 are not organization names.")
     orgs_fp = [ent for ent in r_fp if ent.entity_type == PIIType.ORGANIZATION]
     assert len(orgs_fp) == 0
