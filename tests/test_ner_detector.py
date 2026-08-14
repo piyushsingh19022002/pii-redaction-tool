@@ -87,3 +87,21 @@ def test_repeated_entity_occurrences(detector):
     person_results = [r for r in results if r.text == "John Doe"]
     assert len(person_results) == 2
     assert person_results[0].start != person_results[1].start
+
+def test_ner_address_and_org_regression(detector):
+    """Regression test for custom ORGANIZATION and ADDRESS extraction and filter rules."""
+    # 1. Organization suffix match
+    r_org = detector.detect("Google LLC is located here.")
+    orgs = [ent for ent in r_org if ent.entity_type == PIIType.ORGANIZATION]
+    assert any(o.text == "Google LLC" for o in orgs)
+
+    # 2. Address pattern match
+    r_addr = detector.detect("Address is 1600 Amphitheatre Parkway, Mountain View, CA.")
+    addrs = [ent for ent in r_addr if ent.entity_type == PIIType.ADDRESS]
+    assert len(addrs) == 1
+    assert addrs[0].text == "1600 Amphitheatre Parkway, Mountain View, CA"
+
+    # 3. False Positive Filtering
+    r_fp = detector.detect("SSN, IP, LLC, Server IP, or 01/02/1995 are not organization names.")
+    orgs_fp = [ent for ent in r_fp if ent.entity_type == PIIType.ORGANIZATION]
+    assert len(orgs_fp) == 0

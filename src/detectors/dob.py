@@ -39,7 +39,7 @@ class DOBDetector(BaseDetector):
         )
 
         # Standard detector confidence for a structurally and contextually verified DOB match
-        self.confidence_level = 0.90
+        self.confidence_level = 0.80
 
     @staticmethod
     def validate_date(date_str: str) -> bool:

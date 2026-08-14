@@ -126,3 +126,16 @@ def test_incorrectly_structured_numbers_rejected(detector):
     assert len(detector.detect("1234567890")) == 0
     # Prefixed starts with '1'
     assert len(detector.detect("+91 1234567890")) == 0
+
+def test_phone_with_hyphen_regression(detector):
+    """Regression test for phone number formatted with hyphens/spaces: 98765-43210."""
+    # Positive case
+    r_pos = detector.detect("Call +91 98765-43210 for details.")
+    assert len(r_pos) == 1
+    assert r_pos[0].text == "+91 98765-43210"
+
+    # Negative case (nearby negative example)
+    # Starts with 5 (invalid starting digit for Indian mobile)
+    assert len(detector.detect("Order number 58765-43210")) == 0
+    # Invalid length (too short)
+    assert len(detector.detect("Call 98765-4321")) == 0

@@ -21,11 +21,11 @@ _NEGATIVE_KEYWORDS = {
     # Phone, SSN, and generic numeric types share phone/number-negative contexts
     PIIType.PHONE: [
         "order number", "ticket number", "reference number", "registration number",
-        "application number", "account number"
+        "application number", "account number", "ticket id", "order id", "reference id", "account id"
     ],
     PIIType.SSN: [
         "order number", "ticket number", "reference number", "registration number",
-        "application number", "account number"
+        "application number", "account number", "ticket id", "order id", "reference id", "account id"
     ],
 }
 

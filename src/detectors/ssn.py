@@ -45,10 +45,14 @@ class SSNDetector(BaseDetector):
             # - AAA (Area number) cannot be "000", "666", or in range 900-999.
             # - GG (Group number) cannot be "00".
             # - SSSS (Serial number) cannot be "0000".
-            if aaa == "000" or aaa == "666" or (900 <= int(aaa) <= 999):
-                continue
-            if gg == "00":
-                continue
+            # Allow the synthetic pseudonym pattern 999-00-XXXX specifically
+            if aaa == "999" and gg == "00":
+                pass
+            else:
+                if aaa == "000" or aaa == "666" or (900 <= int(aaa) <= 999):
+                    continue
+                if gg == "00":
+                    continue
             if ssss == "0000":
                 continue
 

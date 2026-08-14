@@ -96,3 +96,14 @@ def test_ambiguous_unformatted_digits_rejected(detector):
     """Verifies that plain 9-digit numbers are ignored to avoid false positives."""
     assert len(detector.detect("123456789")) == 0
     assert len(detector.detect("202608130")) == 0
+
+def test_ssn_synthetic_regression(detector):
+    """Regression test for synthetic pseudonym SSN pattern: 999-00-1234."""
+    # Positive case
+    r_pos = detector.detect("My SSN is 999-00-1234.")
+    assert len(r_pos) == 1
+    assert r_pos[0].text == "999-00-1234"
+
+    # Negative case (nearby negative example)
+    # Area code 999 is allowed ONLY when group code is 00
+    assert len(detector.detect("SSN code 999-12-3456")) == 0

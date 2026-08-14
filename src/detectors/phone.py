@@ -17,7 +17,7 @@ class PhoneDetector(BaseDetector):
         #    (?<!\d) ensures we do not match suffixes of larger numeric values.
         #    (?!\d) ensures we do not match prefixes of larger numeric values.
         self.mobile_regex = re.compile(
-            r"(?<!\d)(?:(?:\+91|91)[\s-]?)?[6-9]\d{9}(?!\d)"
+            r"(?<!\d)(?:(?:\+91|91)[\s-]?)?[6-9](?:\d{9}|\d{4}[\s-]\d{5}|\d{2}[\s-]\d{3}[\s-]\d{4})(?!\d)"
         )
 
         # 2. Indian Landline numbers (STD codes prefixed with country codes +91/91, or starting with 0 locally)

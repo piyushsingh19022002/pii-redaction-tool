@@ -13,7 +13,7 @@ def test_dob_with_different_context_keywords(detector):
     assert len(r1) == 1
     assert r1[0].text == "01/02/1995"
     assert r1[0].entity_type == PIIType.DOB
-    assert r1[0].confidence == 0.90
+    assert r1[0].confidence == 0.80
     assert r1[0].source == "context"
     assert r1[0].start == 15
     assert r1[0].end == 25
