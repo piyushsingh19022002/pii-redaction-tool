@@ -386,17 +386,20 @@ The application can be deployed as a Python FastAPI web service on Render.
 ### Dependency Notes
 
 * **spaCy** is declared in `requirements.txt` (`spacy>=3.8.13`) and is installed by `pip` during the build.
-* **`en_core_web_sm`** is the English language model required by the NER detector (`src/detectors/ner.py`). It is **not** a pip package — it must be downloaded separately via the spaCy CLI after spaCy itself is installed.
-* The application **requires** this model because Named Entity Recognition is a core stage of the PII detection pipeline. There is no fallback; if the model is absent, the application will raise `OSError: [E050] Can't find model 'en_core_web_sm'` at startup.
-* The model must be installed at **build time**, not at application startup, to keep cold-start times fast and avoid transient import errors.
+* **`en_core_web_sm`** is the English language model required by the NER detector (`src/detectors/ner.py`). It is declared directly in `requirements.txt` as a pip wheel URL pointing to the spaCy GitHub releases:
+  ```
+  en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+  ```
+* This approach installs the model **into the same virtual environment as spaCy**, making it discoverable by `spacy.load("en_core_web_sm")` without any separate download step. The previous approach of `python -m spacy download` fails on Render because it installs into the system Python, not the project `.venv`.
+* The application **requires** this model because Named Entity Recognition is a core stage of the PII detection pipeline. There is no fallback — if the model is absent, the application raises `OSError: [E050] Can't find model 'en_core_web_sm'` at startup.
 
 ### Build Command
 
 ```bash
-pip install -r requirements.txt && python -m spacy download en_core_web_sm
+pip install -r requirements.txt
 ```
 
-The `&&` ensures that spaCy is fully installed before the model download runs.
+The spaCy model is installed automatically by pip as part of the standard `requirements.txt` install — no separate step required.
 
 ### Start Command
 
@@ -409,6 +412,7 @@ uvicorn app:app --host 0.0.0.0 --port $PORT
 The repository includes a `render.yaml` file at the root that configures these commands automatically when the repository is connected to Render.
 
 ---
+
 
 
 ## 21. Assignment Deliverables
