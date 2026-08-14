@@ -28,7 +28,7 @@ class PhoneDetector(BaseDetector):
         )
 
         # Standard detector confidence for matched phone candidates
-        self.confidence_level = 0.90
+        self.confidence_level = 0.80
 
     def detect(self, text: str) -> List[PIIEntity]:
         """Scans the text for phone number candidates, validates them structurally, and returns entities.

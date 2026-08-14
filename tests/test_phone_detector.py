@@ -17,7 +17,7 @@ def test_indian_10_digit_mobile(detector):
     assert entity.entity_type == PIIType.PHONE
     assert entity.start == 11
     assert entity.end == 21
-    assert entity.confidence == 0.90
+    assert entity.confidence == 0.80
     assert entity.source == "PhoneDetector"
 
 def test_plus_91_mobile(detector):
@@ -139,3 +139,48 @@ def test_phone_with_hyphen_regression(detector):
     assert len(detector.detect("Order number 58765-43210")) == 0
     # Invalid length (too short)
     assert len(detector.detect("Call 98765-4321")) == 0
+
+def test_6_true_positives_detection(detector):
+    """Verifies that the PhoneDetector detects all 6 true positive PHONE formats from the evaluation set."""
+    # 1. ex2
+    r2 = detector.detect("My contact number is +91 98765-43210.")
+    assert len(r2) == 1 and r2[0].text == "+91 98765-43210"
+
+    # 2. ex22
+    r22 = detector.detect("You can reach the help desk at 9876543210.")
+    assert len(r22) == 1 and r22[0].text == "9876543210"
+
+    # 3. ex23
+    r23 = detector.detect("For support, dial the local landline: 022-2653-3333.")
+    assert len(r23) == 1 and r23[0].text == "022-2653-3333"
+
+    # 4. ex24
+    r24 = detector.detect("Call our helpline at +91-9123456789.")
+    assert len(r24) == 1 and r24[0].text == "+91-9123456789"
+
+    # 5. ex25
+    r25 = detector.detect("Reach our Mumbai office at +91-22-4505-3237.")
+    assert len(r25) == 1 and r25[0].text == "+91-22-4505-3237"
+
+    # 6. ex26
+    r26 = detector.detect("Please contact us via mobile at 9999999999.")
+    assert len(r26) == 1 and r26[0].text == "9999999999"
+
+def test_phone_pipeline_regression_ex58():
+    """Regression test for ex58: Verifies that Ticket ID is rejected as PHONE due to negative context penalty."""
+    from src.pipeline import PIIRedactionPipeline
+    from src.resolver import resolve_candidates
+    
+    pipeline = PIIRedactionPipeline()
+    text = "Ticket ID 98765-43210 is not a valid mobile phone number."
+    
+    # Retrieve PhoneDetector
+    phone_detector = next(d for d in pipeline.detectors if d.name == "PhoneDetector")
+    candidates = phone_detector.detect(text)
+    
+    assert len(candidates) == 1
+    assert candidates[0].text == "98765-43210"
+    
+    resolved = resolve_candidates(candidates, text)
+    assert len(resolved) == 1
+    assert not resolved[0].is_accepted
