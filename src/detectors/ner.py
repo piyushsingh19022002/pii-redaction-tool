@@ -47,7 +47,11 @@ class NERDetector(BaseDetector):
 
         # 1. spaCy NER candidates
         doc = self.nlp(text)
-        filtered_terms = {"SSN", "IP", "LLC", "SERVER IP"}
+        # Added credit card brands and standard technical protocol terms to filtered list
+        filtered_terms = {
+            "SSN", "IP", "LLC", "SERVER IP", "DNS", "VISA", 
+            "MASTERCARD", "AMEX", "RUPAY", "DISCOVER", "JCB"
+        }
 
         for ent in doc.ents:
             if ent.label_ in self.label_mapping:
@@ -62,19 +66,31 @@ class NERDetector(BaseDetector):
                 if ent_text.isdigit():
                     continue
 
+                start_char = ent.start_char
+                end_char = ent.end_char
+
+                # Span alignment check:
+                # If matched text ends in common abbreviations like "Inc", "Corp", "Ltd", "Co" but is followed by a period:
+                abbreviations = {"INC", "CORP", "LTD", "CO", "LLC"}
+                if any(ent_text.upper().endswith(abbr) for abbr in abbreviations):
+                    if end_char < len(text) and text[end_char] == ".":
+                        end_char += 1
+                        ent_text += "."
+
                 entities.append(PIIEntity(
-                    text=ent.text,
+                    text=ent_text,
                     entity_type=self.label_mapping[ent.label_],
-                    start=ent.start_char,
-                    end=ent.end_char,
+                    start=start_char,
+                    end=end_char,
                     confidence=self.confidence_level,
                     source="ner"
                 ))
 
         # 2. General organization suffix regex candidate scan
         # Matches capitalized words followed by LLC, Inc., Corp., Ltd., Co., or Limited.
+        # Boundary check at the end uses negative lookahead instead of \b to avoid failure on trailing periods.
         org_pattern = re.compile(
-            r"\b[A-Z][a-zA-Z0-9]*(?:\s+[A-Z][a-zA-Z0-9]*)*\s+(?:LLC|Inc\.|Corp\.|Ltd\.|Limited|Co\.)\b"
+            r"\b[A-Z][a-zA-Z0-9]*(?:\s+[A-Z][a-zA-Z0-9]*)*\s+(?:LLC|Inc\.|Corp\.|Ltd\.|Limited|Co\.)(?![a-zA-Z0-9])"
         )
         for match in org_pattern.finditer(text):
             entities.append(PIIEntity(

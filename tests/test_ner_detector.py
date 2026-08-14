@@ -99,3 +99,37 @@ def test_ner_address_and_org_regression(detector):
     r_fp = detector.detect("SSN, IP, LLC, Server IP, or 01/02/1995 are not organization names.")
     orgs_fp = [ent for ent in r_fp if ent.entity_type == PIIType.ORGANIZATION]
     assert len(orgs_fp) == 0
+
+def test_organization_precision_regression(detector):
+    """Regression test for Commit 21 organization improvements."""
+    # 1. 3 Observed False Positives (Should be ignored)
+    r_fp1 = detector.detect("Visa credit card is 4111-1111-1111-1111.")
+    assert not any(ent.text == "Visa" and ent.entity_type == PIIType.ORGANIZATION for ent in r_fp1)
+
+    r_fp2 = detector.detect("The DNS server address is 8.8.8.8.")
+    assert not any(ent.text == "DNS" and ent.entity_type == PIIType.ORGANIZATION for ent in r_fp2)
+
+    r_fp3 = detector.detect("SSN, IP, LLC, Server IP are not companies.")
+    assert not any(ent.text in {"SSN", "IP", "Server IP"} and ent.entity_type == PIIType.ORGANIZATION for ent in r_fp3)
+
+    # 2. 1 Observed False Negative (Trailing period span alignment matched)
+    r_fn = detector.detect("The security audit was conducted by TechSolutions Inc..")
+    orgs_fn = [ent for ent in r_fn if ent.entity_type == PIIType.ORGANIZATION]
+    assert any(o.text == "TechSolutions Inc." for o in orgs_fn)
+
+    # 3. Existing Correct Organization Examples
+    r_ex = detector.detect("Google LLC is located here. We visited Acme Corporation today.")
+    orgs_ex = [ent.text for ent in r_ex if ent.entity_type == PIIType.ORGANIZATION]
+    assert "Google LLC" in orgs_ex
+    assert "Acme Corporation" in orgs_ex
+
+    # 4. 2 Additional Realistic Organization Examples
+    r_add = detector.detect("Amazon Web Services Inc. announced a service. SpaceX Corp. launched a rocket.")
+    orgs_add = [ent.text for ent in r_add if ent.entity_type == PIIType.ORGANIZATION]
+    assert "Amazon Web Services Inc." in orgs_add
+    assert "SpaceX Corp." in orgs_add
+
+    # 5. 2 Negative Organization-Like Examples
+    r_neg = detector.detect("This agreement has limited liability and follows corporation policy.")
+    orgs_neg = [ent for ent in r_neg if ent.entity_type == PIIType.ORGANIZATION]
+    assert len(orgs_neg) == 0
