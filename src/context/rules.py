@@ -11,7 +11,7 @@ _POSITIVE_KEYWORDS = {
     PIIType.ORGANIZATION: ["company", "corporation", "incorporated", "organization", "organisation"],
 }
 
-# Negative contextual keywords for ambiguous numeric/date patterns
+# Negative contextual keywords for ambiguous patterns
 _NEGATIVE_KEYWORDS = {
     PIIType.DOB: [
         "date of issue", "issue date", "date of incorporation", "incorporation date",
@@ -27,6 +27,24 @@ _NEGATIVE_KEYWORDS = {
         "order number", "ticket number", "reference number", "registration number",
         "application number", "account number", "ticket id", "order id", "reference id", "account id"
     ],
+    PIIType.ORGANIZATION: [
+        "bids", "bidders", "anchor investors", "closing day", "bid/offer",
+        "promoter selling shareholders", "promoter group", "promoter", "selling shareholders",
+        "key managerial personnel", "designated intermediaries", "board and shareholders",
+        "designated stock exchange", "intermediaries", "shareholders", "promoters", "members",
+        "directors", "auditors", "managers", "personnel", "investors", "subscribers",
+        "selling shareholder", "executive directors", "statutory auditors", "equity share",
+        "equity shares", "debt", "preference share", "preference shares", "mutual funds",
+        "net proceeds", "offer price", "maharashtra", "pune", "village birdewadi", "india",
+        "mumbai", "delhi", "bengaluru", "chennai", "kolkata", "gujarat", "karnataka",
+        "tamil nadu", "haryana", "red herring prospectus", "prospectus", "definitions",
+        "currency", "offer", "risks", "annexure", "contents", "disclosures", "asba", "upi",
+        "pan", "din", "cin", "demat", "neft", "rtgs", "imps", "ecs", "nach", "seb",
+        "inter alia", "table", "schedule", "section", "chapter", "page", "board",
+        "equity", "non-institutional portion", "qib portion", "up", "registrar", "bonus",
+        "sponsor banks", "sponsor bank", "offered shares", "offered share", "qualified institutional buyers",
+        "securities contracts", "regulation rules", "financial statements", "restated financial statements", "sale"
+    ]
 }
 
 # Pre-compile positive regex patterns using word boundaries
@@ -113,29 +131,43 @@ def evaluate_context(
     # 2. Evaluate negative context
     neg_regex = _NEGATIVE_REGEX.get(candidate_type)
     if neg_regex:
-        # Check context before the candidate
-        before_match = neg_regex.search(context_before)
-        if before_match:
-            has_negative = True
-            matched_keyword = before_match.group(0)
-            matched_rule = f"{candidate_type.name}_negative"
-            distance = candidate_start - (max(0, candidate_start - window_size) + before_match.start())
-        else:
-            # Check inside the candidate text itself
+        # For ORGANIZATION, we only evaluate negative context inside the candidate itself
+        # and only if it does not contain strong organizational suffixes/prefixes.
+        if candidate_type == PIIType.ORGANIZATION:
             candidate_match = neg_regex.search(candidate_text)
             if candidate_match:
-                has_negative = True
-                matched_keyword = candidate_match.group(0)
-                matched_rule = f"{candidate_type.name}_negative"
-                distance = 0
-            else:
-                # Check context after the candidate
-                after_match = neg_regex.search(context_after)
-                if after_match:
+                # Strong organization indicators that override negative context
+                org_indicators = ["limited", "ltd", "corporation", "corp", "incorporated", "inc", "llc", "llp", "trust", "ab"]
+                has_org_indicator = any(ind in candidate_text.lower() for ind in org_indicators) or candidate_text.lower().startswith("registrar of")
+                if not has_org_indicator:
                     has_negative = True
-                    matched_keyword = after_match.group(0)
+                    matched_keyword = candidate_match.group(0)
                     matched_rule = f"{candidate_type.name}_negative"
-                    distance = after_match.start()
+                    distance = 0
+        else:
+            # Check context before the candidate
+            before_match = neg_regex.search(context_before)
+            if before_match:
+                has_negative = True
+                matched_keyword = before_match.group(0)
+                matched_rule = f"{candidate_type.name}_negative"
+                distance = candidate_start - (max(0, candidate_start - window_size) + before_match.start())
+            else:
+                # Check inside the candidate text itself
+                candidate_match = neg_regex.search(candidate_text)
+                if candidate_match:
+                    has_negative = True
+                    matched_keyword = candidate_match.group(0)
+                    matched_rule = f"{candidate_type.name}_negative"
+                    distance = 0
+                else:
+                    # Check context after the candidate
+                    after_match = neg_regex.search(context_after)
+                    if after_match:
+                        has_negative = True
+                        matched_keyword = after_match.group(0)
+                        matched_rule = f"{candidate_type.name}_negative"
+                        distance = after_match.start()
 
     return ContextEvidence(
         has_positive=has_positive,

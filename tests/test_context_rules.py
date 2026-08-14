@@ -125,3 +125,30 @@ def test_multiple_context_signals():
     assert evidence.has_negative is True
     # The evaluation prioritizes what is closer or checked. Let's verify both are true
     assert evidence.matched_keyword is not None
+
+def test_organization_domain_negative_rules():
+    """Regression test for Commit 24 ORGANIZATION negative context rules."""
+    # 1. Legal defined terms
+    assert evaluate_context("Bidders", 0, 7, PIIType.ORGANIZATION).has_negative is True
+    assert evaluate_context("Anchor Investors", 0, 16, PIIType.ORGANIZATION).has_negative is True
+
+    # 2. Financial instruments
+    assert evaluate_context("Equity Share", 0, 12, PIIType.ORGANIZATION).has_negative is True
+
+    # 3. Geographic names
+    assert evaluate_context("Maharashtra", 0, 11, PIIType.ORGANIZATION).has_negative is True
+    assert evaluate_context("Pune", 0, 4, PIIType.ORGANIZATION).has_negative is True
+
+    # 4. Section headings
+    assert evaluate_context("RED HERRING PROSPECTUS", 0, 22, PIIType.ORGANIZATION).has_negative is True
+    assert evaluate_context("DEFINITIONS", 0, 11, PIIType.ORGANIZATION).has_negative is True
+
+    # 5. Financial acronyms
+    assert evaluate_context("ASBA", 0, 4, PIIType.ORGANIZATION).has_negative is True
+
+    # 6. Legitimate company names (should NOT match negative context)
+    assert evaluate_context("KSH International Limited", 0, 25, PIIType.ORGANIZATION).has_negative is False
+
+    # 7. Legitimate organizations containing geographic names (should NOT match negative context)
+    assert evaluate_context("Registrar of Companies Maharashtra", 0, 34, PIIType.ORGANIZATION).has_negative is False
+    assert evaluate_context("Ahlstrom Sweden AB", 0, 18, PIIType.ORGANIZATION).has_negative is False
